@@ -86,17 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./config/env_development.json":
-/*!*************************************!*\
-  !*** ./config/env_development.json ***!
-  \*************************************/
-/*! exports provided: name, description, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("{\"name\":\"development\",\"description\":\"Add here any environment specific stuff you like.\"}");
-
-/***/ }),
-
 /***/ "./src/background.js":
 /*!***************************!*\
   !*** ./src/background.js ***!
@@ -115,8 +104,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _menu_dev_menu_template__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./menu/dev_menu_template */ "./src/menu/dev_menu_template.js");
 /* harmony import */ var _menu_edit_menu_template__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu/edit_menu_template */ "./src/menu/edit_menu_template.js");
 /* harmony import */ var _helpers_window__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helpers/window */ "./src/helpers/window.js");
-/* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! env */ "./config/env_development.json");
-var env__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! env */ "./config/env_development.json", 1);
+/* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! env */ "env");
+/* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(env__WEBPACK_IMPORTED_MODULE_6__);
 // This is main process of Electron, started as first thing when your
 // app starts. It runs through entire life of your application.
 // It doesn't have any windows which you can see on screen, but we can open
@@ -134,7 +123,7 @@ var env__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require_
 const setApplicationMenu = () => {
   const menus = [_menu_edit_menu_template__WEBPACK_IMPORTED_MODULE_4__["editMenuTemplate"]];
 
-  if (env__WEBPACK_IMPORTED_MODULE_6__.name !== "production") {
+  if (env__WEBPACK_IMPORTED_MODULE_6___default.a.name !== "production") {
     menus.push(_menu_dev_menu_template__WEBPACK_IMPORTED_MODULE_3__["devMenuTemplate"]);
   }
 
@@ -144,9 +133,9 @@ const setApplicationMenu = () => {
 // on same machine like those are two separate apps.
 
 
-if (env__WEBPACK_IMPORTED_MODULE_6__.name !== "production") {
+if (env__WEBPACK_IMPORTED_MODULE_6___default.a.name !== "production") {
   const userDataPath = electron__WEBPACK_IMPORTED_MODULE_2__["app"].getPath("userData");
-  electron__WEBPACK_IMPORTED_MODULE_2__["app"].setPath("userData", `${userDataPath} (${env__WEBPACK_IMPORTED_MODULE_6__.name})`);
+  electron__WEBPACK_IMPORTED_MODULE_2__["app"].setPath("userData", `${userDataPath} (${env__WEBPACK_IMPORTED_MODULE_6___default.a.name})`);
 }
 
 electron__WEBPACK_IMPORTED_MODULE_2__["app"].on("ready", () => {
@@ -164,7 +153,7 @@ electron__WEBPACK_IMPORTED_MODULE_2__["app"].on("ready", () => {
     slashes: true
   }));
 
-  if (env__WEBPACK_IMPORTED_MODULE_6__.name === "development") {
+  if (env__WEBPACK_IMPORTED_MODULE_6___default.a.name === "development") {
     mainWindow.openDevTools();
   }
 });
@@ -359,6 +348,17 @@ const editMenuTemplate = {
 /***/ (function(module, exports) {
 
 module.exports = require("electron");
+
+/***/ }),
+
+/***/ "env":
+/*!**********************!*\
+  !*** external "env" ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("env");
 
 /***/ }),
 

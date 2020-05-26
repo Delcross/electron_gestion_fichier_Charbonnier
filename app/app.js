@@ -86,17 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./config/env_development.json":
-/*!*************************************!*\
-  !*** ./config/env_development.json ***!
-  \*************************************/
-/*! exports provided: name, description, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("{\"name\":\"development\",\"description\":\"Add here any environment specific stuff you like.\"}");
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/stylesheets/main.css":
 /*!************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/stylesheets/main.css ***!
@@ -518,8 +507,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var fs_jetpack__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! fs-jetpack */ "fs-jetpack");
 /* harmony import */ var fs_jetpack__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fs_jetpack__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _hello_world_hello_world__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./hello_world/hello_world */ "./src/hello_world/hello_world.js");
-/* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! env */ "./config/env_development.json");
-var env__WEBPACK_IMPORTED_MODULE_6___namespace = /*#__PURE__*/__webpack_require__.t(/*! env */ "./config/env_development.json", 1);
+/* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! env */ "env");
+/* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(env__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! fs */ "fs");
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_7__);
  // Small helpers you might want to keep
@@ -785,6 +774,17 @@ module.exports = content.locals || {};
 /***/ (function(module, exports) {
 
 module.exports = require("electron");
+
+/***/ }),
+
+/***/ "env":
+/*!**********************!*\
+  !*** external "env" ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("env");
 
 /***/ }),
 

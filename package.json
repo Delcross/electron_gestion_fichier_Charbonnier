@@ -31,6 +31,7 @@
     "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
   },
   "dependencies": {
+    "env": "0.0.2",
     "fs-jetpack": "^2.1.0",
     "redom": "file:redom"
   },
