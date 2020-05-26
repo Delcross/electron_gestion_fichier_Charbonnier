@@ -511,12 +511,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var env__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(env__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! fs */ "fs");
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_7__);
- // Small helpers you might want to keep
 
 
- // ----------------------------------------------------------------------------
-// Everything below is just to show you how it works. You can delete all of it.
-// ----------------------------------------------------------------------------
 
 
 
@@ -524,28 +520,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const app = electron__WEBPACK_IMPORTED_MODULE_3__["remote"].app;
-const appDir = fs_jetpack__WEBPACK_IMPORTED_MODULE_4___default.a.cwd(app.getAppPath()); // Holy crap! This is browser window with HTML and stuff, but I can read
-// files from disk like it's node.js! Welcome to Electron world :)
-
-const manifest = appDir.read("package.json", "json"); // const osMap = {
-//   win32: "Windows",
-//   darwin: "macOS",
-//   linux: "Linux"
-// };
-
-document.getElementById("app").style.display = "block"; // document.getElementById("greet").innerHTML = greet();
-// document.getElementById("os").innerHTML = osMap[process.platform];
-// document.getElementById("author").innerHTML = manifest.author;
-// document.getElementById("env").innerHTML = env.name;
-// document.getElementById("electron-version").innerHTML = process.versions.electron;
-
+const appDir = fs_jetpack__WEBPACK_IMPORTED_MODULE_4___default.a.cwd(app.getAppPath());
+const manifest = appDir.read("package.json", "json");
+document.getElementById("app").style.display = "block";
 const listNode = document.getElementById("file-list");
 const folderPath = app.getAppPath();
 
 const createChild = (path, fileName, fileStats = {}) => {
-  const listLi = document.createElement("li");
-  const fileButton = document.createElement("button");
-  const statSpan = document.createElement("span");
+  Object(fs__WEBPACK_IMPORTED_MODULE_7__["readdir"])(folderPath, (error, files) => {
+    if (error) {
+      console.error(error);
+    } else {
+      files.forEach(file => {
+        const listLi = document.createElement("li");
+        const navButton = document.createElement("button");
+        const statSpan = document.createElement("span");
+        statSpan.textContent = fileStats.creationTime + " " + fileStats.filesize;
+        navButton.textContent = file;
+        listLi.appendChild(navButton);
+        listLi.appendChild(statSpan);
+        listNode.appendChild(listLi);
+      });
+    }
+  });
   const {
     creationTime,
     filesize
@@ -561,13 +558,9 @@ const createChild = (path, fileName, fileStats = {}) => {
   }
 
   statSpan.textContent = textInfo;
-  fileButton.textContent = fileName;
+  navButton.textContent = fileName;
 
-  fileButton.onclick = _event => updateList(path + '/' + fileName);
-
-  listLi.appendChild(fileButton);
-  listLi.appendChild(statSpan);
-  listNode.appendChild(listLi);
+  navButton.onclick = _event => updateList(path + '/' + fileName);
 };
 
 const updateList = path => {
@@ -580,7 +573,7 @@ const updateList = path => {
         listNode.removeChild(listNode.firstChild);
       }
 
-      createChild(path, "<");
+      createChild(path, "..");
       files.forEach(fileName => {
         Object(fs__WEBPACK_IMPORTED_MODULE_7__["stat"])(`${path}/${fileName}`, (error, fileStats) => {
           if (error) {
@@ -592,7 +585,10 @@ const updateList = path => {
       });
     }
   });
-};
+}; // openFile (path: string): void {
+//   shell.openItem(path)
+// }
+
 
 updateList(folderPath);
 
