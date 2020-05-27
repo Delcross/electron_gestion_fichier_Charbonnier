@@ -19,25 +19,47 @@ const listNode = document.getElementById("file-list");
 
 const folderPath = app.getAppPath();
 
+// const createChild = (path, fileName, fileStats = {}) => {
+//   readdir(folderPath, (error, files) => {
+//     if (error) {
+//       console.error(error);
+//     } else {
+//       files.forEach((file) => {
+//         const listLi = document.createElement("li");
+//         const navButton = document.createElement("button");
+//         const statSpan = document.createElement("span");
+    
+//         statSpan.textContent = fileStats.creationTime + " " + fileStats.filesize;
+//         navButton.textContent = file;
+    
+//         listLi.appendChild(navButton);
+//         listLi.appendChild(statSpan);
+//         listNode.appendChild(listLi);
+//       });
+//     }
+//   })
+//   const{ creationTime, filesize } = fileStats;
+//   let textInfo = " ";
+//   if (typeof creationTime !== "undefined") {
+//     textInfo += " " + creationTime;
+//   }
+//   if (typeof filesize !== "undefined") {
+//     textInfo += " " + filesize;
+//   }
+    
+//   statSpan.textContent = textInfo;
+//   navButton.textContent = fileName;
+//   navButton.onclick = (_event) => updateList(path + '/' + fileName);
+// }
+
 const createChild = (path, fileName, fileStats = {}) => {
-  readdir(folderPath, (error, files) => {
-    if (error) {
-      console.error(error);
-    } else {
-      files.forEach((file) => {
-        const listLi = document.createElement("li");
-        const navButton = document.createElement("button");
-        const statSpan = document.createElement("span");
-    
-        statSpan.textContent = fileStats.creationTime + " " + fileStats.filesize;
-        navButton.textContent = file;
-    
-        listLi.appendChild(navButton);
-        listLi.appendChild(statSpan);
-        listNode.appendChild(listLi);
-      });
-    }
-  })
+
+  const listLi = document.createElement("li");
+  const navButton = document.createElement("button");
+  const statSpan = document.createElement("span");
+
+  statSpan.textContent = fileStats.creationTime + " " + fileStats.filesize;
+
   const{ creationTime, filesize } = fileStats;
   let textInfo = " ";
   if (typeof creationTime !== "undefined") {
@@ -46,12 +68,15 @@ const createChild = (path, fileName, fileStats = {}) => {
   if (typeof filesize !== "undefined") {
     textInfo += " " + filesize;
   }
-    
+
   statSpan.textContent = textInfo;
   navButton.textContent = fileName;
   navButton.onclick = (_event) => updateList(path + '/' + fileName);
+
+  listLi.appendChild(navButton);
+  listLi.appendChild(statSpan);
+  listNode.appendChild(listLi);
 }
- 
 
 const updateList = (path) => {
   console.log(path);
