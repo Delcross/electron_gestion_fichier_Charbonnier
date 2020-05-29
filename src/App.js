@@ -20,7 +20,8 @@ const listNode = document.getElementById("file-list");
 const folderPath = app.getAppPath();
 
 const createChild = (path, fileName, fileStats = {}) => {
-  
+  const{ creationTime, filesize } = fileStats;
+  let textInfo = " ";
   readdir(folderPath, (error, files) => {
     if (error) {
       console.error(error);
@@ -40,8 +41,6 @@ const createChild = (path, fileName, fileStats = {}) => {
       listNode.appendChild(listLi);
     }
   })
-  const{ creationTime, filesize } = fileStats;
-  let textInfo = " ";
   if (typeof creationTime !== "undefined") {
     textInfo += " " + creationTime;
   }
@@ -80,9 +79,5 @@ const updateList = (path) => {
     })
   }
 }
-
-// openFile (path: string): void {
-//   shell.openItem(path)
-// }
 
 updateList(folderPath);
