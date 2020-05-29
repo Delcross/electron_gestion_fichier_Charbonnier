@@ -524,41 +524,30 @@ const appDir = fs_jetpack__WEBPACK_IMPORTED_MODULE_4___default.a.cwd(app.getAppP
 const manifest = appDir.read("package.json", "json");
 document.getElementById("app").style.display = "block";
 const listNode = document.getElementById("file-list");
-const folderPath = app.getAppPath(); // const createChild = (path, fileName, fileStats = {}) => {
-//   readdir(folderPath, (error, files) => {
-//     if (error) {
-//       console.error(error);
-//     } else {
-//       files.forEach((file) => {
-//         const listLi = document.createElement("li");
-//         const navButton = document.createElement("button");
-//         const statSpan = document.createElement("span");
-//         statSpan.textContent = fileStats.creationTime + " " + fileStats.filesize;
-//         navButton.textContent = file;
-//         listLi.appendChild(navButton);
-//         listLi.appendChild(statSpan);
-//         listNode.appendChild(listLi);
-//       });
-//     }
-//   })
-//   const{ creationTime, filesize } = fileStats;
-//   let textInfo = " ";
-//   if (typeof creationTime !== "undefined") {
-//     textInfo += " " + creationTime;
-//   }
-//   if (typeof filesize !== "undefined") {
-//     textInfo += " " + filesize;
-//   }
-//   statSpan.textContent = textInfo;
-//   navButton.textContent = fileName;
-//   navButton.onclick = (_event) => updateList(path + '/' + fileName);
-// }
+const folderPath = app.getAppPath();
 
 const createChild = (path, fileName, fileStats = {}) => {
-  const listLi = document.createElement("li");
-  const navButton = document.createElement("button");
-  const statSpan = document.createElement("span");
-  statSpan.textContent = fileStats.creationTime + " " + fileStats.filesize;
+  Object(fs__WEBPACK_IMPORTED_MODULE_7__["readdir"])(folderPath, (error, files) => {
+    if (error) {
+      console.error(error);
+    } else {
+      const listLi = document.createElement("li");
+      const navButton = document.createElement("button");
+      const statSpan = document.createElement("span");
+      files.forEach(file => {
+        statSpan.textContent = fileStats.creationTime + " " + fileStats.filesize;
+        navButton.textContent = file;
+      });
+      statSpan.textContent = textInfo;
+      navButton.textContent = fileName;
+
+      navButton.onclick = _event => updateList(path + '/' + fileName);
+
+      listLi.appendChild(navButton);
+      listLi.appendChild(statSpan);
+      listNode.appendChild(listLi);
+    }
+  });
   const {
     creationTime,
     filesize
@@ -572,39 +561,40 @@ const createChild = (path, fileName, fileStats = {}) => {
   if (typeof filesize !== "undefined") {
     textInfo += " " + filesize;
   }
-
-  statSpan.textContent = textInfo;
-  navButton.textContent = fileName;
-
-  navButton.onclick = _event => updateList(path + '/' + fileName);
-
-  listLi.appendChild(navButton);
-  listLi.appendChild(statSpan);
-  listNode.appendChild(listLi);
 };
 
 const updateList = path => {
-  console.log(path);
-  Object(fs__WEBPACK_IMPORTED_MODULE_7__["readdir"])(path, (error, files) => {
-    if (error) {
-      console.error(error);
-    } else {
-      while (listNode.firstChild) {
-        listNode.removeChild(listNode.firstChild);
-      }
+  var fs = __webpack_require__(/*! fs */ "fs");
 
-      createChild(path, "..");
-      files.forEach(fileName => {
-        Object(fs__WEBPACK_IMPORTED_MODULE_7__["stat"])(`${path}/${fileName}`, (error, fileStats) => {
-          if (error) {
-            console.error(error);
-          } else {
-            createChild(path, fileName, fileStats);
-          }
+  let fstat = fs.statSync(path);
+  console.log(path);
+
+  if (fstat.isFile()) {
+    electron__WEBPACK_IMPORTED_MODULE_3__["shell"].openItem(path);
+  } else {
+    Object(fs__WEBPACK_IMPORTED_MODULE_7__["readdir"])(path, (error, files) => {
+      if (error) {
+        console.log(path);
+        console.error(error);
+      } else {
+        while (listNode.firstChild) {
+          listNode.removeChild(listNode.firstChild);
+        }
+
+        createChild(path, "..");
+        files.forEach(fileName => {
+          Object(fs__WEBPACK_IMPORTED_MODULE_7__["stat"])(`${path}/${fileName}`, (error, fileStats) => {
+            if (error) {
+              console.error(error);
+            } else {
+              createChild(path, fileName, fileStats);
+              console.log("The file content is : " + files);
+            }
+          });
         });
-      });
-    }
-  });
+      }
+    });
+  }
 }; // openFile (path: string): void {
 //   shell.openItem(path)
 // }
